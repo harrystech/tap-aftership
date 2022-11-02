@@ -32,7 +32,14 @@ class AfterShipStream(RESTStream):
     ) -> Optional[Any]:
         """Return a token for identifying next page or None if no more pages."""
         response_json = response.json()
-        if response_json["data"] and response.status_code == 200:
+        # Only return a next page if this is a successful response with more trackings
+        # to process
+        if (
+            "data" in response_json
+            and "trackings" in response_json["data"]
+            and response_json["data"]["trackings"]
+            and response.status_code == 200
+        ):
             return response_json["data"]["page"] + 1
         else:
             return None
@@ -43,7 +50,9 @@ class AfterShipStream(RESTStream):
         Overridden from base class to check for status_code == 400, which is how
         AfterShip denotes hitting the pagination limit.
         """
-        #  Aftership responds with a 400 when pagination limit is hit, ignore it
+        #  Aftership responds with a 400 and empty data object when pagination limit is
+        #  hit, don't raise fatal error to indicate stream failure, let
+        #  get_next_page_token handle the logic.
         if response.status_code != 400:
             super(AfterShipStream, self).validate_response(response)
 
