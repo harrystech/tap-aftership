@@ -271,7 +271,7 @@
             "type": "string"
           },
           "raw_tag": {
-            "type": "string"
+            "type": ["string", "null"]
           }
         }
       }
@@ -391,7 +391,7 @@
       }
     },
     "aftership_estimated_delivery_date": {
-      "type": "object",
+      "type": ["object", "null"],
       "properties": {
         "estimated_delivery_date": {
           "type": "string"
@@ -417,7 +417,7 @@
       ]
     },
     "latest_estimated_delivery": {
-      "type": "object",
+      "type": ["object", "null"],
       "properties": {
         "type": {
           "type": "string"
