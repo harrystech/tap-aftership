@@ -3,7 +3,6 @@
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-import requests
 from singer_sdk.authenticators import APIKeyAuthenticator
 from singer_sdk.streams import RESTStream
 
@@ -26,35 +25,6 @@ class AfterShipStream(RESTStream):
             value=str(self.config.get("api_key")),
             location="header",
         )
-
-    def get_next_page_token(
-        self, response: requests.Response, previous_token: Optional[Any]
-    ) -> Optional[Any]:
-        """Return a token for identifying next page or None if no more pages."""
-        response_json = response.json()
-        # Only return a next page if this is a successful response with more trackings
-        # to process
-        if (
-            "data" in response_json
-            and "trackings" in response_json["data"]
-            and response_json["data"]["trackings"]
-            and response.status_code == 200
-        ):
-            return response_json["data"]["page"] + 1
-        else:
-            return None
-
-    def validate_response(self, response: requests.Response) -> None:
-        """Validate HTTP response.
-
-        Overridden from base class to check for status_code == 400, which is how
-        AfterShip denotes hitting the pagination limit.
-        """
-        #  Aftership responds with a 400 and empty data object when pagination limit is
-        #  hit, don't raise fatal error to indicate stream failure, let
-        #  get_next_page_token handle the logic.
-        if response.status_code != 400:
-            super(AfterShipStream, self).validate_response(response)
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]

@@ -1,19 +1,12 @@
 """Tests standard tap features using the built-in SDK tests library."""
 
-import datetime
-
 import requests_mock
 from singer_sdk.testing import get_standard_tap_tests
 
 from tap_aftership.streams import TrackingsStream
 from tap_aftership.tap import TapAfterShip
 
-now = datetime.datetime.now(datetime.timezone.utc)
-SAMPLE_CONFIG = {
-    "start_date": (now - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),
-    "end_date": now.strftime("%Y-%m-%d"),
-    "api_key": "test-api-key",
-}
+from . import SAMPLE_CONFIG
 
 
 # Run standard built-in tap tests from the SDK:
