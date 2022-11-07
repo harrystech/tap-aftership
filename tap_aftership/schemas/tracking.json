@@ -380,7 +380,7 @@
     },
     "on_time_difference": {
       "type": [
-        "string",
+        "number",
         "null"
       ]
     },
