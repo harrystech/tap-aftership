@@ -15,8 +15,8 @@ def test_standard_tap_tests():
     with requests_mock.Mocker() as m:
         path = (
             f"{TrackingsStream.path}?"
-            f"created_at_max={SAMPLE_CONFIG['end_date']}"
-            f"&created_at_min={SAMPLE_CONFIG['start_date']}"
+            f"updated_at_max={SAMPLE_CONFIG['end_date']}"
+            f"&updated_at_min={SAMPLE_CONFIG['start_date']}"
         )
         m.get(path, status_code=200, text='{"data": {"page": 1, "trackings": []}}')
         m.get(

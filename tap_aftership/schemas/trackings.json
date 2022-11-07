@@ -83,7 +83,7 @@
                 "type": "string",
                 "minLength": 1
               },
-              "updated_ate": {
+              "updated_at": {
                 "type": "string",
                 "minLength": 1
               },

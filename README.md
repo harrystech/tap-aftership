@@ -30,15 +30,15 @@ pipx install git+https://github.com/ORG_NAME/tap-aftership.git@main
 
 ## Settings
 
-| Setting             | Required | Default | Description |
-|:--------------------|:--------:|:-------:|:------------|
-| api_key             | True     | None    | The token to authenticate against the API service |
-| start_date          | False    | None    | The earliest record date to sync |
-| end_date            | False    | None    | The latest record date to sync |
+| Setting             | Required | Default | Description                                                                                                                                 |
+|:--------------------|:--------:|:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------|
+| api_key             | True     | None    | The token to authenticate against the API service                                                                                           |
+| start_date          | False    | None    | The earliest record date to sync (by time of update)                                                                                        |
+| end_date            | False    | None    | The latest record date to sync (by time of update)                                                                                          |
 | stream_maps         | False    | None    | Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html). |
-| stream_map_config   | False    | None    | User-defined config values to be used within map expressions. |
-| flattening_enabled  | False    | None    | 'True' to enable schema flattening and automatically expand nested properties. |
-| flattening_max_depth| False    | None    | The max depth to flatten schemas. |
+| stream_map_config   | False    | None    | User-defined config values to be used within map expressions.                                                                               |
+| flattening_enabled  | False    | None    | 'True' to enable schema flattening and automatically expand nested properties.                                                              |
+| flattening_max_depth| False    | None    | The max depth to flatten schemas.                                                                                                           |
 
 A full list of supported settings and capabilities is available by running: `tap-aftership --about`
 
