@@ -2,51 +2,38 @@
 
 from typing import List
 
-from singer_sdk import Tap, Stream
+from singer_sdk import Stream, Tap
 from singer_sdk import typing as th  # JSON schema typing helpers
-# TODO: Import your custom stream types here:
-from tap_aftership.streams import (
-    AfterShipStream,
-    UsersStream,
-    GroupsStream,
-)
-# TODO: Compile a list of custom stream types here
-#       OR rewrite discover_streams() below with your custom logic.
+
+from tap_aftership.streams import TrackingsStream
+
 STREAM_TYPES = [
-    UsersStream,
-    GroupsStream,
+    TrackingsStream,
 ]
 
 
 class TapAfterShip(Tap):
     """AfterShip tap class."""
+
     name = "tap-aftership"
 
-    # TODO: Update this section with the actual config values you expect:
     config_jsonschema = th.PropertiesList(
         th.Property(
-            "auth_token",
+            "api_key",
             th.StringType,
             required=True,
             secret=True,  # Flag config as protected.
-            description="The token to authenticate against the API service"
-        ),
-        th.Property(
-            "project_ids",
-            th.ArrayType(th.StringType),
-            required=True,
-            description="Project IDs to replicate"
+            description="The token to authenticate against the API service",
         ),
         th.Property(
             "start_date",
             th.DateTimeType,
-            description="The earliest record date to sync"
+            description="The earliest record date to sync",
         ),
         th.Property(
-            "api_url",
-            th.StringType,
-            default="https://api.mysample.com",
-            description="The url for the API service"
+            "end_date",
+            th.DateTimeType,
+            description="The latest record date to sync",
         ),
     ).to_dict()
 

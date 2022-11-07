@@ -1,12 +1,9 @@
 # tap-aftership
 
-`tap-aftership` is a Singer tap for AfterShip.
+`tap-aftership` is a Singer tap for AfterShip. Fetches trackings from the AfterShip API
+using the [trackings API endpoint](https://www.aftership.com/docs/aftership/ce171c8e31139-get-trackings)
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
-
-<!--
-
-Developer TODO: Update the below as needed to correctly describe the install procedure. For instance, if you do not have a PyPi repo, or if you want users to directly install from your git repo, you can modify this step as appropriate.
 
 ## Installation
 
@@ -22,28 +19,28 @@ Install from GitHub:
 pipx install git+https://github.com/ORG_NAME/tap-aftership.git@main
 ```
 
--->
+## Capabilities
 
-## Configuration
+* `catalog`
+* `state`
+* `discover`
+* `about`
+* `stream-maps`
+* `schema-flattening`
 
-### Accepted Config Options
+## Settings
 
-<!--
-Developer TODO: Provide a list of config options accepted by the tap.
+| Setting             | Required | Default | Description                                                                                                                                 |
+|:--------------------|:--------:|:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------|
+| api_key             | True     | None    | The token to authenticate against the API service                                                                                           |
+| start_date          | False    | None    | The earliest record date to sync (by time of update)                                                                                        |
+| end_date            | False    | None    | The latest record date to sync (by time of update)                                                                                          |
+| stream_maps         | False    | None    | Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html). |
+| stream_map_config   | False    | None    | User-defined config values to be used within map expressions.                                                                               |
+| flattening_enabled  | False    | None    | 'True' to enable schema flattening and automatically expand nested properties.                                                              |
+| flattening_max_depth| False    | None    | The max depth to flatten schemas.                                                                                                           |
 
-This section can be created by copy-pasting the CLI output from:
-
-```
-tap-aftership --about --format=markdown
-```
--->
-
-A full list of supported settings and capabilities for this
-tap is available by running:
-
-```bash
-tap-aftership --about
-```
+A full list of supported settings and capabilities is available by running: `tap-aftership --about`
 
 ### Configure using environment variables
 
@@ -53,9 +50,11 @@ environment variable is set either in the terminal context or in the `.env` file
 
 ### Source Authentication and Authorization
 
-<!--
-Developer TODO: If your tap requires special access on the source system, or any special authentication requirements, provide those here.
--->
+An API key can be created in the AfterShip UI following [these
+instructions](https://www.aftership.com/docs/aftership/quickstart/api-quick-start#:~:text=Get%20the%20API%20key,to%20generate%20your%20API%20key.).
+Note that this tap currently only supports the [legacy API
+key](https://www.aftership.com/docs/aftership/quickstart/authentication#4-legacy-api-keys)
+format.
 
 ## Usage
 
@@ -99,12 +98,6 @@ poetry run tap-aftership --help
 
 _**Note:** This tap will work in any Singer environment and does not require Meltano.
 Examples here are for convenience and to streamline end-to-end orchestration scenarios._
-
-<!--
-Developer TODO:
-Your project comes with a custom `meltano.yml` project file already created. Open the `meltano.yml` and follow any "TODO" items listed in
-the file.
--->
 
 Next, install Meltano (if you haven't already) and any needed plugins:
 

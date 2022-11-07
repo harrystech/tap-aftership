@@ -2,7 +2,7 @@
 name = "tap-aftership"
 version = "0.0.1"
 description = "`tap-aftership` is a Singer tap for AfterShip, built with the Meltano Singer SDK."
-authors = ["Harry's"]
+authors = ["harrystech"]
 keywords = [
     "ELT",
     "AfterShip",
@@ -18,11 +18,12 @@ singer-sdk = "^0.13.0"
 pytest = "^6.2.5"
 tox = "^3.24.4"
 flake8 = "^3.9.2"
-black = "^21.9b0"
+black = "^22.3.0"
 pydocstyle = "^6.1.1"
 mypy = "^0.910"
 types-requests = "^2.26.1"
 isort = "^5.10.1"
+requests-mock = "^1.10.0"
 
 [tool.isort]
 profile = "black"

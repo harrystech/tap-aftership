@@ -1,62 +1,45 @@
 """Stream type classes for tap-aftership."""
 
 from pathlib import Path
-from typing import Any, Dict, Optional, Union, List, Iterable
 
-from singer_sdk import typing as th  # JSON Schema typing helpers
+import requests
+from singer_sdk.pagination import BaseAPIPaginator, BasePageNumberPaginator
 
 from tap_aftership.client import AfterShipStream
 
-# TODO: Delete this is if not using json files for schema definition
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
-# TODO: - Override `UsersStream` and `GroupsStream` with your own stream definition.
-#       - Copy-paste as many times as needed to create multiple stream types.
 
 
-class UsersStream(AfterShipStream):
+class TrackingsPaginator(BasePageNumberPaginator):
+    """Paginator for the trackings AfterShip stream."""
+
+    def has_more(self, response: requests.Response) -> bool:
+        """Check if the trackings endpoint has more pages left."""
+        # Only return a next page if this is a successful response with more trackings
+        # to process
+        response_json = response.json()
+        if (
+            "data" in response_json
+            and "trackings" in response_json["data"]
+            and response_json["data"]["trackings"]
+            and response.status_code == 200
+        ):
+            return True
+        else:
+            return False
+
+
+class TrackingsStream(AfterShipStream):
     """Define custom stream."""
-    name = "users"
-    path = "/users"
+
+    name = "trackings"
+    path = "/v4/trackings"
     primary_keys = ["id"]
     replication_key = None
-    # Optionally, you may also use `schema_filepath` in place of `schema`:
-    # schema_filepath = SCHEMAS_DIR / "users.json"
-    schema = th.PropertiesList(
-        th.Property("name", th.StringType),
-        th.Property(
-            "id",
-            th.StringType,
-            description="The user's system ID"
-        ),
-        th.Property(
-            "age",
-            th.IntegerType,
-            description="The user's age in years"
-        ),
-        th.Property(
-            "email",
-            th.StringType,
-            description="The user's email address"
-        ),
-        th.Property("street", th.StringType),
-        th.Property("city", th.StringType),
-        th.Property(
-            "state",
-            th.StringType,
-            description="State name in ISO 3166-2 format"
-        ),
-        th.Property("zip", th.StringType),
-    ).to_dict()
 
+    schema_filepath = SCHEMAS_DIR / "tracking.json"
+    records_jsonpath = "$.data.trackings[*]"
 
-class GroupsStream(AfterShipStream):
-    """Define custom stream."""
-    name = "groups"
-    path = "/groups"
-    primary_keys = ["id"]
-    replication_key = "modified"
-    schema = th.PropertiesList(
-        th.Property("name", th.StringType),
-        th.Property("id", th.StringType),
-        th.Property("modified", th.DateTimeType),
-    ).to_dict()
+    def get_new_paginator(self) -> BaseAPIPaginator:
+        """Get a new TrackingsPaginator for the trackings API endpoint."""
+        return TrackingsPaginator(start_value=1)
