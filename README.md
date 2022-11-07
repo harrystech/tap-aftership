@@ -1,6 +1,7 @@
 # tap-aftership
 
-`tap-aftership` is a Singer tap for AfterShip.
+`tap-aftership` is a Singer tap for AfterShip. Fetches trackings from the AfterShip API
+using the [trackings API endpoint](https://www.aftership.com/docs/aftership/ce171c8e31139-get-trackings)
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 

@@ -35,6 +35,7 @@ class AfterShipStream(RESTStream):
             params["page"] = next_page_token
         if "end_date" in self.config:
             params["created_at_max"] = self.config["end_date"]
-        params["created_at_min"] = self.config["start_date"]
+        if "start_date" in self.config:
+            params["created_at_min"] = self.config["start_date"]
 
         return params
