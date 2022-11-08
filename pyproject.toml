@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tap-aftership"
-version = "0.0.2"
+version = "0.0.3"
 description = "`tap-aftership` is a Singer tap for AfterShip, built with the Meltano Singer SDK."
 authors = ["harrystech"]
 keywords = [
