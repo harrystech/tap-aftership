@@ -331,7 +331,10 @@
       ]
     },
     "courier_redirect_link": {
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "tracking_account_number": {
       "type": [
